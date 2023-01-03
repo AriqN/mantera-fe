@@ -4,7 +4,6 @@ import { styled, alpha } from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 const StyledMenu = styled((props) => (
@@ -110,7 +109,6 @@ export default function CustomizedMenus({ setGenre }) {
           thriller
         </MenuItem>
         <MenuItem onClick={handleClose} disableRipple data-my-value={"others"}>
-          <MoreHorizIcon />
           others
         </MenuItem>
       </StyledMenu>

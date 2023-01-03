@@ -17,6 +17,7 @@ import Cookies from "js-cookie";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import Dialog from "@mui/material/Dialog";
+import TextField from "@mui/material/TextField";
 
 const style = {
   position: "absolute",
@@ -29,23 +30,39 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
-const CardList = ({ data }) => {
+const ProgressCardList = ({ data, setUserData }) => {
   const accessToken = Cookies.get("jwt");
   const hostServer = "18.136.118.175";
   const [open, setOpen] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  // const [dataBook, setDataBook] = useState([]);
-
+  //   const [dataBook, setDataBook] = useState([]);
+  const [newReadingProgress, setNewReadingProgress] = useState(0);
   const [message, setMessage] = useState("");
-  const apiAddReadingMaterial = async (e) => {
+  const apiUser = async (e) => {
+    await axios
+      .get(
+        `http://${hostServer}:3000/api/v1/users/myData`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+        },
+        { withCredentials: true }
+      )
+      .then(function (response) {
+        setUserData(response.data.data);
+      });
+  };
+  const apiAddReadingProgress = async (e) => {
     setMessage("");
     await axios
       .patch(
-        `http://${hostServer}:3000/api/v1/users/readBook`,
+        `http://${hostServer}:3000/api/v1/users/updateProgress/${data._id}`,
         {
-          currentRead: [`${data._id}`],
+          pageRead: newReadingProgress,
         },
         {
           headers: {
@@ -56,14 +73,15 @@ const CardList = ({ data }) => {
         { withCredentials: true }
       )
       .then(function () {
+        apiUser();
         handleClose();
       })
       .catch((err) => {
         setMessage(err.response.data.message);
       });
   };
-  const handleAddReadingMaterial = () => {
-    apiAddReadingMaterial();
+  const handleAddReadingProgress = () => {
+    apiAddReadingProgress();
   };
   const handleClickOpen = () => {
     setOpenDialog(true);
@@ -87,11 +105,6 @@ const CardList = ({ data }) => {
     <>
       <Grid item key={data} xs={12} sm={6} md={4}>
         <Card sx={{ maxWidth: 345 }}>
-          <CardMedia
-            sx={{ height: 140 }}
-            image={data.imageCover}
-            title="green iguana"
-          />
           <CardContent sx={{ height: 160 }}>
             <Typography
               gutterBottom
@@ -111,12 +124,14 @@ const CardList = ({ data }) => {
               variant="body2"
               color="text.secondary"
             >
-              {data.description}
+              {`Page Read : ${Math.round(
+                (data.pageRead / data.pages) * 100
+              )} %`}
             </Typography>
           </CardContent>
           <CardActions>
             <Button size="small" onClick={handleOpen}>
-              Add to My Library
+              Add Reading Progress
             </Button>
             <Button size="small">Details</Button>
           </CardActions>
@@ -145,7 +160,17 @@ const CardList = ({ data }) => {
                 }}
                 noValidate
                 autoComplete="off"
-              ></Box>
+              >
+                <TextField
+                  id="filled-basic"
+                  label="Reading Material Pages"
+                  type="number"
+                  variant="filled"
+                  onChange={(e) =>
+                    setNewReadingProgress(parseInt(e.target.value))
+                  }
+                />
+              </Box>
             </Typography>
             <Stack
               spacing={2}
@@ -155,8 +180,8 @@ const CardList = ({ data }) => {
               <Button variant="text" onClick={handleClose}>
                 Cancel
               </Button>
-              <Button variant="contained" onClick={handleAddReadingMaterial}>
-                Yes
+              <Button variant="contained" onClick={handleAddReadingProgress}>
+                Add Progress
               </Button>
             </Stack>
           </Box>
@@ -178,5 +203,4 @@ const CardList = ({ data }) => {
     </>
   );
 };
-
-export default CardList;
+export default ProgressCardList;

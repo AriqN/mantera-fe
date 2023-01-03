@@ -24,6 +24,8 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { Redirect } from "react-router-dom";
 import { Cookie } from "tough-cookie";
 import BasicModal from "../components/addbooks/testModal";
+import ProgressCardList from "../components/addProgress/myBookCards";
+import Pagination from "@mui/material/Pagination";
 
 function Copyright() {
   return (
@@ -42,12 +44,36 @@ const theme = createTheme();
 const hostServer = "18.136.118.175";
 export default function HomePage() {
   const [data, setData] = useState([]);
+  const [dataCount, setDataCount] = useState(0);
   const [userData, setUserData] = useState();
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
+  const [myLibrary, setMyLibrary] = useState(false);
   const [bookData, setBookData] = useState();
   const accessToken = Cookies.get("jwt");
+  const [page, setPage] = useState(1);
+  const [count, setCount] = useState(1);
+  const handleChangePage = (event, value) => {
+    setPage(value);
+  };
+  const apiBooksCount = async (e) => {
+    await axios
+      .get(
+        `http://${hostServer}:3000/api/v1/books?limit=60000`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+        },
+        { withCredentials: true }
+      )
+      .then(function (response) {
+        setDataCount(Math.ceil(response.data.resultsNumber / 6));
+        console.log(dataCount);
+      });
+  };
   const apiUser = async (e) => {
     await axios
       .get(
@@ -67,7 +93,7 @@ export default function HomePage() {
   const apiBooks = async (e) => {
     await axios
       .get(
-        `http://${hostServer}:3000/api/v1/books`,
+        `http://${hostServer}:3000/api/v1/books?limit=6&page=${page}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -96,6 +122,25 @@ export default function HomePage() {
     window.location.reload();
     setOpen(false);
   };
+  const handleMyLibraryButton = async () => {
+    apiUser();
+    setMyLibrary(true);
+    console.log(myLibrary);
+  };
+  const handleMainLibraryButton = async () => {
+    setMyLibrary(false);
+    console.log(myLibrary);
+  };
+  // useEffect(() => {
+
+  // }, [handleMyLibraryButton]);
+  useEffect(() => {
+    apiBooks();
+    // setCount(Math.ceil(dataCount / 6));
+  }, [page]);
+  useEffect(() => {
+    apiBooksCount();
+  }, [loading]);
 
   useEffect(() => {
     async function fetchData() {
@@ -123,7 +168,8 @@ export default function HomePage() {
     }
     fetchData();
     apiBooks();
-    console.log(data, userData);
+    // apiBooksCount();
+    console.log(dataCount);
     if (message) {
       return handleClickOpen();
     }
@@ -182,18 +228,58 @@ export default function HomePage() {
                   justifyContent="center"
                 >
                   {/* <AddLibraryBook /> */}
-                  <BasicModal setBookData={setBookData} />
-                  <Button variant="outlined">My Library</Button>
+
+                  {!myLibrary ? (
+                    <>
+                      <BasicModal setBookData={setBookData} />
+                      <Button
+                        variant="outlined"
+                        onClick={handleMyLibraryButton}
+                      >
+                        My Library
+                      </Button>
+                    </>
+                  ) : (
+                    <Button
+                      variant="outlined"
+                      onClick={handleMainLibraryButton}
+                    >
+                      Main Library
+                    </Button>
+                  )}
                 </Stack>
               </Container>
             </Box>
             <Container sx={{ py: 8 }} maxWidth="md">
               {/* End hero unit */}
-              <Grid container spacing={4}>
-                {data.map((data) => (
-                  <CardList data={data} key={data._id} />
-                ))}
-              </Grid>
+              {myLibrary ? (
+                <Grid container spacing={4}>
+                  {userData.currentRead.map((data) => (
+                    <ProgressCardList
+                      data={data}
+                      key={data._id}
+                      setUserData={setUserData}
+                    />
+                  ))}
+                </Grid>
+              ) : (
+                <>
+                  <Grid container spacing={4}>
+                    {data.map((data) => (
+                      <CardList data={data} key={data._id} />
+                    ))}
+                  </Grid>
+                  <br />
+                  <Stack spacing={2}>
+                    <Typography>Page: {page}</Typography>
+                    <Pagination
+                      count={dataCount}
+                      page={page}
+                      onChange={handleChangePage}
+                    />
+                  </Stack>
+                </>
+              )}
             </Container>
           </main>
           {/* Footer */}
