@@ -91,8 +91,14 @@ export default function SignInSide() {
   };
 
   const handleClose = () => {
+    // async function eraseMessage() {
+    //   await Promise.all(setMessage(""));
+    // }
+    // eraseMessage();
     setOpen(false);
-    setMessage("");
+    // if (message) {
+    //   setOpen(false);
+    // }
   };
   const API = async (e) => {
     await axios
@@ -114,9 +120,10 @@ export default function SignInSide() {
         setLogin(true);
         setLoading(false);
       })
-      .catch((err) => setMessage(err.response.data.message));
-
-    handleClickOpen();
+      .catch((err) => {
+        setMessage(err.response.data.message);
+        // handleClickOpen();
+      });
   };
 
   const handleSubmit = async (event) => {
@@ -131,19 +138,40 @@ export default function SignInSide() {
     setPassword(dataPassword[1]);
     console.log(dataEmail, dataPassword);
     setLoading(true);
-    if (email && password) {
-      API();
-    }
-    console.log(email, password);
+    // console.log(message);
+    // console.log(login);
 
     // if (message) {
     //   return handleClickOpen();
     // }
+  };
+  useEffect(() => {
+    setLoading(false);
     if (login) {
       window.location.replace(`http://localhost:3000/home`);
     }
+  }, [login]);
+  useEffect(() => {
+    if (!open) {
+      setMessage("");
+      setEmail("");
+      setPassword("");
+    }
+  }, [handleClose]);
+  useEffect(() => {
+    if (email && password) {
+      console.log(email, password);
+      API();
+    }
+  }, [handleSubmit]);
+  useEffect(() => {
     setLoading(false);
-  };
+    if (message) {
+      console.log(message);
+      handleClickOpen();
+      console.log(message);
+    }
+  }, [message]);
   return (
     <ThemeProvider theme={theme}>
       <Grid container component="main" sx={{ height: "100vh" }}>
@@ -257,7 +285,9 @@ export default function SignInSide() {
                   <AlertTitle>Error</AlertTitle>
                   This is an error alert —
                   <br />
-                  <strong>{message}</strong>
+                  <strong>
+                    {message ? message : "Incorrect Email Or Password"}
+                  </strong>
                 </Alert>
               </Dialog>
 

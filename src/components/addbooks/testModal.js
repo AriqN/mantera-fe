@@ -13,6 +13,9 @@ import CustomizedMenus from "./menuItem";
 import Cookies from "js-cookie";
 import axios from "axios";
 import CircularProgress from "@mui/material/CircularProgress";
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
+import Dialog from "@mui/material/Dialog";
 
 const style = {
   position: "absolute",
@@ -30,16 +33,51 @@ const hostServer = "18.136.118.175";
 const accessToken = Cookies.get("jwt");
 export default function BasicModal({ setBookData }) {
   const [open, setOpen] = React.useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const [newLibraryBook, setlibraryBooks] = useState("");
+  const [newLibraryBook, setNewLibraryBooks] = useState("");
   const [description, setDescription] = useState("");
   const [genre, setGenre] = useState("");
   const [newLibraryPage, setNewLibraryPage] = useState(0);
+  const [message, setMessage] = useState("");
+  const [value, setValue] = useState("");
+
+  // const value = message.match(/(["'])(?:(?=(\\?))\2.)*?\1/);
+  // const errTitle = value;
 
   const [loading, setLoading] = useState(true);
+  const handleClickOpen = () => {
+    setOpenDialog(true);
+  };
+
+  const handleCloseDialog = () => {
+    if (!openDialog) {
+      setMessage("");
+    }
+    setOpenDialog(false);
+  };
+  useEffect(() => {
+    // setLoading(false);
+    if (message) {
+      console.log(message);
+      handleClickOpen();
+      console.log(message);
+      const errTitle = message.match(/(["'])(?:(?=(\\?))\2.)*?\1/);
+      setValue(errTitle[0]);
+    }
+  }, [message]);
+  // useEffect(() => {
+  //   if (!openDialog) {
+  //     setMessage("");
+  //     // setNewLibraryBooks("");
+  //     // setNewLibraryPage(0);
+  //     // setDescription("");
+  //     // setGenre("");
+  //   }
+  // }, [handleCloseDialog]);
   const storeData = async () => {
-    console.log(newLibraryBook, newLibraryPage, description, genre);
+    setMessage("");
     const accessToken = Cookies.get("jwt");
     await axios
       .post(
@@ -61,9 +99,10 @@ export default function BasicModal({ setBookData }) {
       .then((response) => {
         setBookData(response.data);
         handleClose();
-      });
+      })
+      .catch((err) => setMessage(err.response.data.message));
   };
-
+  // console.log(newLibraryBook, newLibraryPage, description, genre);
   return (
     <>
       <Button onClick={handleOpen}>
@@ -100,19 +139,19 @@ export default function BasicModal({ setBookData }) {
             >
               <TextField
                 id="filled-basic"
-                label="Book Name"
+                label="Title"
                 variant="filled"
-                onChange={(e) => setlibraryBooks(e.target.value)}
+                onChange={(e) => setNewLibraryBooks(e.target.value)}
               />
               <TextField
                 id="filled-basic"
-                label="Book Description"
+                label="Description"
                 variant="filled"
                 onChange={(e) => setDescription(e.target.value)}
               />
               <TextField
                 id="filled-basic"
-                label="Number of book pages"
+                label="Reading Material Pages"
                 type="number"
                 variant="filled"
                 onChange={(e) => setNewLibraryPage(parseInt(e.target.value))}
@@ -128,12 +167,31 @@ export default function BasicModal({ setBookData }) {
             <Button variant="text" onClick={handleClose}>
               Cancel
             </Button>
-            <Button variant="contained" onClick={storeData}>
+            <Button
+              variant="contained"
+              disabled={
+                !(description && newLibraryPage && genre && newLibraryBook)
+              }
+              onClick={storeData}
+            >
               Save
             </Button>
           </Stack>
         </Box>
       </Modal>
+      <Dialog
+        open={openDialog}
+        onClose={handleCloseDialog}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <Alert severity="error" onClose={handleCloseDialog}>
+          <AlertTitle>Error</AlertTitle>
+          This is an error alert —
+          <br />
+          <strong>{`Reading Material with Title ${value} is Already Exist`}</strong>
+        </Alert>
+      </Dialog>
     </>
   );
 }
