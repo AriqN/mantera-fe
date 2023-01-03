@@ -23,8 +23,6 @@ import DashboardUser from "../components/userDashboard";
 import CircularProgress from "@mui/material/CircularProgress";
 import { Redirect } from "react-router-dom";
 import { Cookie } from "tough-cookie";
-import AddButton from "../components/addbooks/AddbookButton";
-import AddLibraryBook from "../components/addbooks/Addbook";
 import BasicModal from "../components/addbooks/testModal";
 
 function Copyright() {
@@ -95,7 +93,7 @@ export default function HomePage() {
   const handleClose = async () => {
     Cookies.remove("jwt");
     setMessage("");
-    window.location.replace(`http://localhost:3000/`);
+    window.location.reload();
     setOpen(false);
   };
 

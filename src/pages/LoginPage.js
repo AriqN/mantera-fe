@@ -109,8 +109,14 @@ export default function SignInSide() {
         },
         { withCredentials: true }
       )
-      .then((res) => Cookies.set("jwt", res.data.token, { expires: 7 }))
+      .then((res) => {
+        Cookies.set("jwt", res.data.token, { expires: 7 });
+        setLogin(true);
+        setLoading(false);
+      })
       .catch((err) => setMessage(err.response.data.message));
+
+    handleClickOpen();
   };
 
   const handleSubmit = async (event) => {
@@ -126,18 +132,17 @@ export default function SignInSide() {
     console.log(dataEmail, dataPassword);
     setLoading(true);
     if (email && password) {
-      await API();
+      API();
     }
     console.log(email, password);
-    console.log(message);
-    setLoading(false);
-    if (message) {
-      return handleClickOpen();
-    }
-    setLogin(true);
+
+    // if (message) {
+    //   return handleClickOpen();
+    // }
     if (login) {
       window.location.replace(`http://localhost:3000/home`);
     }
+    setLoading(false);
   };
   return (
     <ThemeProvider theme={theme}>

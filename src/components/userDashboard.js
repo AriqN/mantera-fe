@@ -9,12 +9,19 @@ const DashboardUser = ({ userData }) => {
   const progressLevel = async () => {
     const allPage = await userData.currentRead.map((el) => el.pageRead * 1);
     const updatePage = await allPage.reduce((a, b) => a + b);
+    const expBefore = Math.round(
+      0.5 * ((userData.level - 1) * 5) +
+        0.8 * ((userData.level - 1) * 9) +
+        200 * (userData.level - 1)
+    );
     const exp = Math.round(
       0.5 * (userData.level * 5) +
         0.8 * (userData.level * 9) +
         200 * userData.level
     );
-    setProgress(Math.round((updatePage / exp) * 100));
+
+    setProgress(Math.round(((updatePage - expBefore) / exp) * 100));
+    // console.log(exp, expBefore, expProgress, updatePage);
   };
   useEffect(() => {
     progressLevel();
