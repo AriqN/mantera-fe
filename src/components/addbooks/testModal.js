@@ -63,35 +63,8 @@ export default function BasicModal({ setBookData }) {
         handleClose();
       });
   };
-  // useEffect(() => {
-  //   // setLoading(true);
-  //   // async function fetchData() {
-  //   //   await axios
-  //   //     .get(
-  //   //       `http://${hostServer}:3000/api/v1/users/myData`,
-  //   //       {
-  //   //         headers: {
-  //   //           "Content-Type": "application/json",
-  //   //           Authorization: `Bearer ${accessToken}`,
-  //   //         },
-  //   //       },
-  //   //       { withCredentials: true }
-  //   //     )
-  //   //     .then(() => {
-  //   //       setLoading(false);
-  //   //     });
-  //   // }
-  //   // fetchData();
-  //   if (bookData && !loading) {
-  //     window.location.reload();
-  //   }
-  // }, [bookData]);
 
   return (
-    // <>
-    //   {loading ? (
-    //     <CircularProgress />
-    //   ) : (
     <>
       <Button onClick={handleOpen}>
         <CardActions>
@@ -162,7 +135,5 @@ export default function BasicModal({ setBookData }) {
         </Box>
       </Modal>
     </>
-    //   )}
-    // </>
   );
 }
