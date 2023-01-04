@@ -24,6 +24,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import Cookies from "js-cookie";
 import { Route, Redirect } from "react-router-dom";
+import "./index.css";
 
 const hostServer = "18.136.118.175";
 function Copyright(props) {
@@ -148,7 +149,7 @@ export default function SignInSide() {
   useEffect(() => {
     setLoading(false);
     if (login) {
-      window.location.replace(`http://localhost:3000/home`);
+      window.location.reload();
     }
   }, [login]);
   useEffect(() => {
@@ -181,8 +182,8 @@ export default function SignInSide() {
           xs={false}
           sm={4}
           md={7}
+          className="landing-page"
           sx={{
-            backgroundImage: "url(https://source.unsplash.com/random)",
             backgroundRepeat: "no-repeat",
             backgroundColor: (t) =>
               t.palette.mode === "light"

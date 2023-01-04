@@ -1,0 +1,18 @@
+.landing-page {
+  background-image: url("../assets/emil-widlund-xrbbXIXAWY0-unsplash.jpg");
+}
+.bar {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.bar-dashboard {
+  width: 80%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.bar-logout {
+  width: 20%;
+}

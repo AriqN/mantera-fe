@@ -21,11 +21,10 @@ import { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import DashboardUser from "../components/userDashboard";
 import CircularProgress from "@mui/material/CircularProgress";
-import { Redirect } from "react-router-dom";
-import { Cookie } from "tough-cookie";
 import BasicModal from "../components/addbooks/testModal";
 import ProgressCardList from "../components/addProgress/myBookCards";
 import Pagination from "@mui/material/Pagination";
+import BookIcon from "@mui/icons-material/Book";
 
 function Copyright() {
   return (
@@ -107,10 +106,10 @@ export default function HomePage() {
       })
       .catch((err) => {
         setMessage(err.response.data.message);
-      })
-      .then(() => {
-        setLoading(false);
       });
+    // .then(() => {
+    //   setLoading(false);
+    // });
   };
   const handleClickOpen = async () => {
     setOpen(true);
@@ -122,6 +121,11 @@ export default function HomePage() {
     window.location.reload();
     setOpen(false);
   };
+  const handleLogOut = async () => {
+    Cookies.remove("jwt");
+    window.location.reload();
+  };
+
   const handleMyLibraryButton = async () => {
     apiUser();
     setMyLibrary(true);
@@ -204,10 +208,24 @@ export default function HomePage() {
           <CssBaseline />
           <AppBar position="relative">
             <Toolbar>
-              <CameraIcon sx={{ mr: 2 }} />
-              <Typography variant="h6" color="inherit" noWrap>
-                Dashboard
-              </Typography>
+              <div className="bar">
+                <div className="bar">
+                  <BookIcon sx={{ mr: 2 }} />
+                  <Typography variant="h6" color="inherit" noWrap>
+                    Dashboard
+                  </Typography>
+                </div>
+                <div>
+                  <Button
+                    variant="contained"
+                    color="warning"
+                    sx={{ width: 100 }}
+                    onClick={handleLogOut}
+                  >
+                    Log Out
+                  </Button>
+                </div>
+              </div>
             </Toolbar>
           </AppBar>
           <main>
