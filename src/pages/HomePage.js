@@ -274,21 +274,21 @@ export default function HomePage() {
               {/* End hero unit */}
               {myLibrary ? (
                 <Grid container spacing={4}>
-                  <div
+                  {/* <div
                     style={{
                       width: "500px",
                       overflow: "auto",
                       display: "flex",
                     }}
-                  >
-                    {userData.currentRead.map((data) => (
-                      <ProgressCardList
-                        data={data}
-                        key={data._id}
-                        setUserData={setUserData}
-                      />
-                    ))}
-                  </div>
+                  > */}
+                  {userData.currentRead.map((data) => (
+                    <ProgressCardList
+                      data={data}
+                      key={data._id}
+                      setUserData={setUserData}
+                    />
+                  ))}
+                  {/* </div> */}
                 </Grid>
               ) : (
                 <>
