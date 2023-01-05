@@ -118,7 +118,7 @@ const CardList = ({ data }) => {
               gutterBottom
               variant="h6"
               component="div"
-              sx={{ height: 35, alignItems: "center" }}
+              sx={{ height: 50, alignItems: "center" }}
             >
               {data.name}
             </Typography>
