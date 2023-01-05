@@ -25,29 +25,39 @@ import * as Yup from "yup";
 import Cookies from "js-cookie";
 import { Route, Redirect } from "react-router-dom";
 import "./index.css";
+import logo from "../assets/mantera-logo(black).png";
+import ImageList from "@mui/material/ImageList";
+import ImageListItem from "@mui/material/ImageListItem";
 
 const hostServer = "18.136.118.175";
 function Copyright(props) {
   return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
+    <>
+      <ImageList sx={{ width: 200, height: 150 }}>
+        <ImageListItem>
+          <img src={logo} alt="logo" loading="lazy" />
+        </ImageListItem>
+      </ImageList>
+      <Typography
+        variant="body2"
+        color="text.secondary"
+        align="center"
+        {...props}
+      >
+        {"Copyright © "}
+        <Link color="inherit" href="https://mui.com/">
+          Your Website
+        </Link>{" "}
+        {new Date().getFullYear()}
+        {"."}
+      </Typography>
+    </>
   );
 }
 
 function InputErrorMessage({ touched, errors, inputName }) {
   return (
-    <Typography variant="caption" color="red" fontFamily={"roboto"}>
+    <Typography variant="caption" color="red">
       {touched[inputName] && errors[inputName]}
     </Typography>
   );
@@ -96,6 +106,7 @@ export default function SignInSide() {
     //   await Promise.all(setMessage(""));
     // }
     // eraseMessage();
+    setMessage("");
     setOpen(false);
     // if (message) {
     //   setOpen(false);
@@ -124,6 +135,9 @@ export default function SignInSide() {
       .catch((err) => {
         setMessage(err.response.data.message);
         // handleClickOpen();
+      })
+      .then(() => {
+        setLoading(false);
       });
   };
 
@@ -147,14 +161,12 @@ export default function SignInSide() {
     // }
   };
   useEffect(() => {
-    setLoading(false);
     if (login) {
       window.location.reload();
     }
   }, [login]);
   useEffect(() => {
     if (!open) {
-      setMessage("");
       setEmail("");
       setPassword("");
     }
@@ -166,11 +178,8 @@ export default function SignInSide() {
     }
   }, [handleSubmit]);
   useEffect(() => {
-    setLoading(false);
     if (message) {
-      console.log(message);
-      handleClickOpen();
-      console.log(message);
+      return handleClickOpen();
     }
   }, [message]);
   return (
@@ -208,7 +217,7 @@ export default function SignInSide() {
             </Avatar>
             <Typography component="h1" variant="h5">
               {/* {list} */}
-              welkam tu mantera
+              Sign In
             </Typography>
             <Box
               component="form"
@@ -250,10 +259,10 @@ export default function SignInSide() {
                 inputName="password"
               />
               <br />
-              <FormControlLabel
+              {/* <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
                 label="Remember me"
-              />
+              /> */}
               {loading ? (
                 <LoadingButton
                   loading
@@ -286,20 +295,18 @@ export default function SignInSide() {
                   <AlertTitle>Error</AlertTitle>
                   This is an error alert —
                   <br />
-                  <strong>
-                    {message ? message : "Incorrect Email Or Password"}
-                  </strong>
+                  <strong>{message}</strong>
                 </Alert>
               </Dialog>
 
               <Grid container>
-                <Grid item xs>
+                {/* <Grid item xs>
                   <Link href="#" variant="body2">
                     Forgot password?
                   </Link>
-                </Grid>
+                </Grid> */}
                 <Grid item>
-                  <Link href="#" variant="body2">
+                  <Link href="/signup" variant="body2">
                     {"Don't have an account? Sign Up"}
                   </Link>
                 </Grid>

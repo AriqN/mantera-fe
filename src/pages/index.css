@@ -1,5 +1,5 @@
 .landing-page {
-  background-image: url("../assets/emil-widlund-xrbbXIXAWY0-unsplash.jpg");
+  background-image: url("../assets/Mantera-cover.jpg");
 }
 .bar {
   width: 100%;
@@ -15,4 +15,13 @@
 }
 .bar-logout {
   width: 20%;
+}
+.logo {
+  width: 200px;
+}
+
+@media (max-width: 900px) {
+  .landing-page {
+    background-image: url("../assets/emil-widlund-xrbbXIXAWY0-unsplash.jpg");
+  }
 }

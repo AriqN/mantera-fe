@@ -8,7 +8,7 @@ const DashboardUser = ({ userData }) => {
   const [progress, setProgress] = useState(0);
   const progressLevel = async () => {
     const allPage = await userData.currentRead.map((el) => el.pageRead * 1);
-    const updatePage = await allPage.reduce((a, b) => a + b);
+    const updatePage = await allPage.reduce((a, b) => a + b, 0);
     const expBefore = Math.round(
       0.5 * ((userData.level - 1) * 5) +
         0.8 * ((userData.level - 1) * 9) +

@@ -6,6 +6,8 @@ import SignInSide from "./pages/LoginPage";
 import GuestPrivateRoute from "./routes/GuestPrivateRoute";
 import HomePage from "./pages/HomePage";
 import UserPrivateRoute from "./routes/userPrivateRoute";
+import SignUpRoute from "./routes/SignUpRoute";
+import SignUpSide from "./pages/SignUpPage";
 
 function App() {
   return (
@@ -24,6 +26,7 @@ function App() {
         </UserPrivateRoute> */}
         <GuestPrivateRoute exact path="/home" component={HomePage} />
         <UserPrivateRoute exact path="/" component={SignInSide} />
+        <SignUpRoute exact path="/signup" component={SignUpSide} />
       </Switch>
     </Router>
     // <div className="App">
