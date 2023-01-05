@@ -21,9 +21,10 @@ const DashboardUser = ({ userData, setLoadProgress }) => {
         200 * userData.level
     );
 
-    setProgress(Math.round(((updatePage - expBefore) / exp) * 100));
+    setProgress(
+      Math.round(((updatePage - expBefore) / (exp - expBefore)) * 100)
+    );
     setLoadProgress(false);
-    // console.log(exp, expBefore, expProgress, updatePage);
   };
   useEffect(() => {
     progressLevel();
