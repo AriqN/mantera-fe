@@ -18,6 +18,8 @@ import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import Dialog from "@mui/material/Dialog";
 import TextField from "@mui/material/TextField";
+import BookIcon from "@mui/icons-material/Book";
+import DoneAllIcon from "@mui/icons-material/DoneAll";
 
 const style = {
   position: "absolute",
@@ -107,6 +109,8 @@ const ProgressCardList = ({ data, setUserData }) => {
       <Grid item key={data} xs={12} sm={6} md={4}>
         <Card sx={{ maxWidth: 345 }}>
           <CardContent sx={{ height: 160 }}>
+            {data.pageRead / data.pages === 1 ? <DoneAllIcon /> : <BookIcon />}
+
             <Typography
               gutterBottom
               variant="h6"
@@ -114,6 +118,18 @@ const ProgressCardList = ({ data, setUserData }) => {
               sx={{ height: 35, alignItems: "center" }}
             >
               {data.name}
+            </Typography>
+            <Typography
+              sx={{
+                display: "-webkit-box",
+                overflow: "hidden",
+                WebkitBoxOrient: "vertical",
+                WebkitLineClamp: 4,
+              }}
+              variant="body2"
+              color="text.secondary"
+            >
+              {`Total Page : ${data.pages}`}
             </Typography>
             <Typography
               sx={{

@@ -25,6 +25,9 @@ import * as Yup from "yup";
 import Cookies from "js-cookie";
 import { Route, Redirect } from "react-router-dom";
 import "./index.css";
+import logo from "../assets/mantera-logo(black).png";
+import ImageList from "@mui/material/ImageList";
+import ImageListItem from "@mui/material/ImageListItem";
 
 const hostServer = "18.136.118.175";
 function Copyright(props) {
@@ -36,8 +39,8 @@ function Copyright(props) {
       {...props}
     >
       {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
+      <Link color="inherit" href="/">
+        mantera.
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
@@ -363,6 +366,15 @@ export default function SignUpSide() {
                   </Link>
                 </Grid>
               </Grid>
+              <ImageListItem
+                sx={{
+                  width: 300,
+                  mt: 20,
+                  display: { xs: "block", md: "none", lg: "none" },
+                }}
+              >
+                <img src={logo} alt="logo" loading="lazy" />
+              </ImageListItem>
               <Copyright sx={{ mt: 5 }} />
             </Box>
           </Box>

@@ -27,14 +27,17 @@ import Pagination from "@mui/material/Pagination";
 import BookIcon from "@mui/icons-material/Book";
 import map from "lodash/map";
 import range from "lodash/range";
+import logo from "../assets/mantera-logo(black).png";
+import ImageList from "@mui/material/ImageList";
+import ImageListItem from "@mui/material/ImageListItem";
 
 function Copyright() {
   return (
     <>
       <Typography variant="body2" color="text.secondary" align="center">
         {"Copyright © "}
-        <Link color="inherit" href="https://mui.com/">
-          Your Website
+        <Link color="inherit" href="/">
+          mantera.
         </Link>{" "}
         {new Date().getFullYear()}
         {"."}
@@ -314,7 +317,7 @@ export default function HomePage() {
           </main>
           {/* Footer */}
           <Box sx={{ bgcolor: "background.paper", p: 6 }} component="footer">
-            <Typography variant="h6" align="center" gutterBottom>
+            {/* <Typography variant="h6" align="center" gutterBottom>
               Footer
             </Typography>
             <Typography
@@ -324,8 +327,27 @@ export default function HomePage() {
               component="p"
             >
               Something here to give the footer a purpose!
-            </Typography>
-            <Copyright />
+            </Typography> */}
+            <Grid
+              container
+              spacing={0}
+              direction="column"
+              alignItems="center"
+              justifyContent="center"
+              // style={{ minHeight: "10vh" }}
+            >
+              <ImageListItem
+                sx={{
+                  width: 300,
+                  mt: 5,
+                  mb: 1,
+                  // display: { xs: "block", md: "none", lg: "none" },
+                }}
+              >
+                <img src={logo} alt="logo" loading="lazy" />
+              </ImageListItem>
+              <Copyright sx={{ mt: 5 }} />
+            </Grid>
           </Box>
           {/* End footer */}
         </ThemeProvider>

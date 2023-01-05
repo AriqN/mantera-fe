@@ -33,11 +33,6 @@ const hostServer = "18.136.118.175";
 function Copyright(props) {
   return (
     <>
-      <ImageList sx={{ width: 200, height: 150 }}>
-        <ImageListItem>
-          <img src={logo} alt="logo" loading="lazy" />
-        </ImageListItem>
-      </ImageList>
       <Typography
         variant="body2"
         color="text.secondary"
@@ -45,8 +40,8 @@ function Copyright(props) {
         {...props}
       >
         {"Copyright © "}
-        <Link color="inherit" href="https://mui.com/">
-          Your Website
+        <Link color="inherit" href="/">
+          mantera.
         </Link>{" "}
         {new Date().getFullYear()}
         {"."}
@@ -311,7 +306,18 @@ export default function SignInSide() {
                   </Link>
                 </Grid>
               </Grid>
-              <Copyright sx={{ mt: 5 }} />
+              <br />
+              <ImageListItem
+                sx={{
+                  width: 300,
+                  mt: 20,
+                  display: { xs: "block", md: "none", lg: "none" },
+                }}
+              >
+                <img src={logo} alt="logo" loading="lazy" />
+              </ImageListItem>
+
+              <Copyright sx={{ mt: 2 }} />
             </Box>
           </Box>
         </Grid>
