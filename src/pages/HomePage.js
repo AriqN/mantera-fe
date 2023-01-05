@@ -25,6 +25,8 @@ import BasicModal from "../components/addbooks/testModal";
 import ProgressCardList from "../components/addProgress/myBookCards";
 import Pagination from "@mui/material/Pagination";
 import BookIcon from "@mui/icons-material/Book";
+import map from "lodash/map";
+import range from "lodash/range";
 
 function Copyright() {
   return (
@@ -272,13 +274,21 @@ export default function HomePage() {
               {/* End hero unit */}
               {myLibrary ? (
                 <Grid container spacing={4}>
-                  {userData.currentRead.map((data) => (
-                    <ProgressCardList
-                      data={data}
-                      key={data._id}
-                      setUserData={setUserData}
-                    />
-                  ))}
+                  <div
+                    style={{
+                      width: "500px",
+                      overflow: "auto",
+                      display: "flex",
+                    }}
+                  >
+                    {userData.currentRead.map((data) => (
+                      <ProgressCardList
+                        data={data}
+                        key={data._id}
+                        setUserData={setUserData}
+                      />
+                    ))}
+                  </div>
                 </Grid>
               ) : (
                 <>

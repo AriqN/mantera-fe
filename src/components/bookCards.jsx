@@ -17,6 +17,19 @@ import Cookies from "js-cookie";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import Dialog from "@mui/material/Dialog";
+import CloseIcon from "@mui/icons-material/Close";
+import Slide from "@mui/material/Slide";
+import ListItemText from "@mui/material/ListItemText";
+import ListItem from "@mui/material/ListItem";
+import List from "@mui/material/List";
+import Divider from "@mui/material/Divider";
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import IconButton from "@mui/material/IconButton";
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 const style = {
   position: "absolute",
@@ -33,6 +46,7 @@ const CardList = ({ data }) => {
   const accessToken = Cookies.get("jwt");
   const hostServer = "18.136.118.175";
   const [open, setOpen] = useState(false);
+  const [bookDetails, setBookDetails] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -67,6 +81,13 @@ const CardList = ({ data }) => {
   };
   const handleClickOpen = () => {
     setOpenDialog(true);
+  };
+
+  const handleOpenBookDetails = () => {
+    setBookDetails(true);
+  };
+  const handleCloseBookDetails = () => {
+    setBookDetails(false);
   };
 
   const handleCloseDialog = () => {
@@ -118,7 +139,9 @@ const CardList = ({ data }) => {
             <Button size="small" onClick={handleOpen}>
               Add to My Library
             </Button>
-            <Button size="small">Details</Button>
+            <Button size="small" onClick={handleOpenBookDetails}>
+              Details
+            </Button>
           </CardActions>
         </Card>
       </Grid>
@@ -173,6 +196,40 @@ const CardList = ({ data }) => {
             <br />
             <strong>{`${message}`}</strong>
           </Alert>
+        </Dialog>
+        <Dialog
+          fullScreen
+          open={bookDetails}
+          onClose={handleCloseBookDetails}
+          TransitionComponent={Transition}
+        >
+          <AppBar sx={{ position: "relative" }}>
+            <Toolbar>
+              <IconButton
+                edge="start"
+                color="inherit"
+                onClick={handleCloseBookDetails}
+                aria-label="close"
+              >
+                <CloseIcon />
+              </IconButton>
+              <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
+                {data.name}
+              </Typography>
+            </Toolbar>
+          </AppBar>
+          <List>
+            <ListItem button>
+              <ListItemText
+                primary="Description"
+                secondary={data.description}
+              />
+            </ListItem>
+            <Divider />
+            <ListItem button>
+              <ListItemText primary="Page" secondary={data.pages} />
+            </ListItem>
+          </List>
         </Dialog>
       </>
     </>

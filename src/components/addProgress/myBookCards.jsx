@@ -30,6 +30,7 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
+
 const ProgressCardList = ({ data, setUserData }) => {
   const accessToken = Cookies.get("jwt");
   const hostServer = "18.136.118.175";
@@ -133,7 +134,7 @@ const ProgressCardList = ({ data, setUserData }) => {
             <Button size="small" onClick={handleOpen}>
               Add Reading Progress
             </Button>
-            <Button size="small">Details</Button>
+            {/* <Button size="small">Details</Button> */}
           </CardActions>
         </Card>
       </Grid>
