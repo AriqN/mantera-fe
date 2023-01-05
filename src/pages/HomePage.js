@@ -54,12 +54,14 @@ export default function HomePage() {
   const [userData, setUserData] = useState();
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(true);
+  const [loadProgress, setLoadProgress] = useState(false);
   const [open, setOpen] = useState(false);
   const [myLibrary, setMyLibrary] = useState(false);
   const [bookData, setBookData] = useState();
   const accessToken = Cookies.get("jwt");
   const [page, setPage] = useState(1);
   const [count, setCount] = useState(1);
+
   const handleChangePage = (event, value) => {
     setPage(value);
   };
@@ -245,7 +247,11 @@ export default function HomePage() {
               }}
             >
               <Container maxWidth="sm">
-                <DashboardUser userData={userData} />
+                <DashboardUser
+                  userData={userData}
+                  setLoadProgress={setLoadProgress}
+                  loadProgress={loadProgress}
+                />
                 <Stack
                   sx={{ pt: 4 }}
                   direction="row"
@@ -291,6 +297,8 @@ export default function HomePage() {
                       data={data}
                       key={data._id}
                       setUserData={setUserData}
+                      setLoadProgress={setLoadProgress}
+                      loadProgress={loadProgress}
                     />
                   ))}
                   {/* </div> */}

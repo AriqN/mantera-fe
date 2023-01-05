@@ -33,13 +33,20 @@ const style = {
   p: 4,
 };
 
-const ProgressCardList = ({ data, setUserData }) => {
+const ProgressCardList = ({
+  data,
+  setUserData,
+  setLoadProgress,
+  loadProgress,
+}) => {
   const accessToken = Cookies.get("jwt");
   const hostServer = "18.136.118.175";
   const [open, setOpen] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {
+    if (!loadProgress) setOpen(false);
+  };
   //   const [dataBook, setDataBook] = useState([]);
   const [newReadingProgress, setNewReadingProgress] = useState(0);
   const [message, setMessage] = useState("");
@@ -76,8 +83,11 @@ const ProgressCardList = ({ data, setUserData }) => {
         { withCredentials: true }
       )
       .then(function () {
+        setLoadProgress(true);
         apiUser();
         handleClose();
+        // apiUser();
+        // window.location.reload();
       })
       .catch((err) => {
         setMessage(err.response.data.message);
@@ -104,6 +114,7 @@ const ProgressCardList = ({ data, setUserData }) => {
       handleClickOpen();
     }
   }, [message]);
+
   return (
     <>
       <Grid item key={data} xs={12} sm={6} md={4}>
@@ -115,7 +126,7 @@ const ProgressCardList = ({ data, setUserData }) => {
               gutterBottom
               variant="h6"
               component="div"
-              sx={{ height: 35, alignItems: "center" }}
+              sx={{ height: 35, alignItems: "center", overflow: "hidden" }}
             >
               {data.name}
             </Typography>

@@ -1,10 +1,11 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/react-in-jsx-scope */
 /* eslint-disable react/prop-types */
 import Typography from "@mui/material/Typography";
 import { useState, useEffect } from "react";
 import LinearWithValueLabel from "./progressBar";
 
-const DashboardUser = ({ userData }) => {
+const DashboardUser = ({ userData, setLoadProgress }) => {
   const [progress, setProgress] = useState(0);
   const progressLevel = async () => {
     const allPage = await userData.currentRead.map((el) => el.pageRead * 1);
@@ -21,11 +22,12 @@ const DashboardUser = ({ userData }) => {
     );
 
     setProgress(Math.round(((updatePage - expBefore) / exp) * 100));
+    setLoadProgress(false);
     // console.log(exp, expBefore, expProgress, updatePage);
   };
   useEffect(() => {
     progressLevel();
-  }, [progress]);
+  }, [userData]);
   return (
     <>
       <Typography
