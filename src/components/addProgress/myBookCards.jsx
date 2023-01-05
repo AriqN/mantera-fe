@@ -163,9 +163,9 @@ const ProgressCardList = ({ data, setUserData }) => {
         >
           <Box sx={style}>
             <Typography id="modal-modal-title" variant="h6" component="h2">
-              <b>Confirmation</b> <br />
+              <b>Progress</b> <br />
               <p style={{ fontSize: 14, margin: 0 }}>
-                Add This Material To Your Reading Collection ?
+                Add Number of Page You Have read !
               </p>
               <hr />
             </Typography>
@@ -180,7 +180,7 @@ const ProgressCardList = ({ data, setUserData }) => {
               >
                 <TextField
                   id="filled-basic"
-                  label="Reading Material Pages"
+                  label="Pages Read"
                   type="number"
                   variant="filled"
                   onChange={(e) =>
