@@ -29,7 +29,7 @@ const style = {
   p: 4,
 };
 
-const hostServer = "18.136.118.175";
+const hostServer = "18.140.65.55";
 const accessToken = Cookies.get("jwt");
 export default function BasicModal({ setBookData }) {
   const [open, setOpen] = React.useState(false);

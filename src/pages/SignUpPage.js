@@ -26,10 +26,10 @@ import Cookies from "js-cookie";
 import { Route, Redirect } from "react-router-dom";
 import "./index.css";
 import logo from "../assets/mantera-logo(black).png";
-import ImageList from "@mui/material/ImageList";
+
 import ImageListItem from "@mui/material/ImageListItem";
 
-const hostServer = "18.136.118.175";
+const hostServer = "18.140.65.55";
 function Copyright(props) {
   return (
     <Typography

@@ -47,7 +47,7 @@ function Copyright() {
 }
 
 const theme = createTheme();
-const hostServer = "18.136.118.175";
+const hostServer = "18.140.65.55";
 export default function HomePage() {
   const [data, setData] = useState([]);
   const [dataCount, setDataCount] = useState(0);
