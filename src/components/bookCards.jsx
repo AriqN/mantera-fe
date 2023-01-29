@@ -44,7 +44,7 @@ const style = {
 };
 const CardList = ({ data }) => {
   const accessToken = Cookies.get("jwt");
-  const hostServer = "18.140.65.55";
+  const hostServer = "54.255.14.152";
   const [open, setOpen] = useState(false);
   const [bookDetails, setBookDetails] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);

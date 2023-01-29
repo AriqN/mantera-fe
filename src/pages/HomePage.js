@@ -25,10 +25,7 @@ import BasicModal from "../components/addbooks/testModal";
 import ProgressCardList from "../components/addProgress/myBookCards";
 import Pagination from "@mui/material/Pagination";
 import BookIcon from "@mui/icons-material/Book";
-import map from "lodash/map";
-import range from "lodash/range";
 import logo from "../assets/mantera-logo(black).png";
-import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 
 function Copyright() {
@@ -47,7 +44,7 @@ function Copyright() {
 }
 
 const theme = createTheme();
-const hostServer = "18.140.65.55";
+const hostServer = "54.255.14.152";
 export default function HomePage() {
   const [data, setData] = useState([]);
   const [dataCount, setDataCount] = useState(0);

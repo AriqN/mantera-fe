@@ -29,7 +29,7 @@ import logo from "../assets/mantera-logo(black).png";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 
-const hostServer = "18.140.65.55";
+const hostServer = "54.255.14.152";
 function Copyright(props) {
   return (
     <>
